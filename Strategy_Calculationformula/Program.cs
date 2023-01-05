@@ -15,8 +15,8 @@
 
             foreach(Schemeinformation schemeinformation in schemeinformationList)
             {
-                //使用简单工厂获得公式对象
-                context.SetFromula(FormulaFactory.GetFormula(schemeinformation.Formula));
+                //使用反射动态创建公式实例
+                context.SetFromula((AbstractFormula)System.Reflection.Assembly.GetExecutingAssembly().CreateInstance(schemeinformation.Formula));
                 //获取当前公式的计算结果集
                 List<string>tempResults=context.Caclute(schemeinformation);
                 //遍历结果，将所有结果放入到总结果集中
